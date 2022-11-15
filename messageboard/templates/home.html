@@ -1,0 +1,18 @@
+<!-- templates/home.html -->
+{% extends 'base.html' %}
+
+{% block content%}
+
+<h1>Home Page</h1>
+
+<ul>
+    {% for post in all_posts_list %}
+        <li>{{ post.title }}</li>
+        <li>{{ post.created_on }}</li>
+        <li>{{ post.text }}</li>
+        <br/>
+        <br/>
+    {% endfor %}
+</ul>
+
+{% endblock %}
