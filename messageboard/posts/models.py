@@ -4,7 +4,7 @@ from django.db import models
 # Create your models here.
 
 class Post(models.Model):
-    created_on = models.DateTimeField()
+    created_on = models.DateTimeField(null=True)
     title = models.CharField(max_length=100, null=True)
     text = models.TextField(null=True)
 
