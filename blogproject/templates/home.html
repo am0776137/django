@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h3>Home</h3>
+
+    {% for blogpost in all_blog_posts %}
+        <div class="post-entry">
+            <h2><a href="">{{ blogpost.title }}</a></h2>
+            <p>{{ blogpost.author }}</p>
+        </div>
+            
+    {% endfor %}
+
+{% endblock %}
+
