@@ -11,4 +11,39 @@ from .models import Post
 
 
 class BlogTests(TestCase):
-    pass
+    
+    def setUp(self):
+        # user creation
+        self.user = get_user_model().objects.create_user(
+            username = "testuser",
+            email = 'test@test.com',
+            password = 'secret'
+        )
+    
+        # pist creation
+        self.post = Post.objects.create(
+            title = 'test-post',
+            body = 'test body content',
+            author = self.user # created 
+        )
+
+    def test_post_content(self):
+        self.assertEqual(f'{self.post.title}', 'test-post')
+        self.assertEqual(f'{self.post.body}', 'test body content')
+        self.assertEqual(f'{self.post.author}', 'testuser') # perhaps, author returns username as object representation in __str__ 
+        # otherwise self.post.author.username would have been checked against the username string
+
+
+    def test_post_list_view(self):
+        pass
+
+
+    def test_post_detail_view(self):
+        pass
+
+
+
+
+
+
+    
