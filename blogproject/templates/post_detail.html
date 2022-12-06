@@ -6,6 +6,7 @@
         <p>{{ post.body }}</p>
     </div>
 
-    <a href="{% url 'post_edit' post.id %}">Edit Post</a>
+    <input type="button" value="Edit the Post" onclick="location.href='{% url 'post_edit' post.id %}'">
+    <input type="button" value="Delete the Post" onclick="location.href='{% url 'post_delete' post.id %}'">
     
 {% endblock %}
