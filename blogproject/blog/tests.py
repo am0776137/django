@@ -1,4 +1,4 @@
-from django.test import TestCase
+from django.test import TestCase, SimpleTestCase
 from django.urls import reverse
 
 from django.contrib.auth import get_user_model
@@ -53,10 +53,10 @@ class BlogTests(TestCase):
             testing DetailView contents,
             testing template used in DetailView
         """
-        response = self.client.get('/post/1')
+        response = self.client.get('/post/1/')
         self.assertEqual(response.status_code, 200)
 
-        no_response = self.client.get('/post/1000')
+        no_response = self.client.get('/post/1000/')
         self.assertEqual(no_response.status_code, 404)
 
         self.assertContains(response, 'test body content')
@@ -64,7 +64,52 @@ class BlogTests(TestCase):
 
 
 
+    # NEW Tests after adding CRUD functionality
+    #   def test_get_absolute_url
+    #   def test_post_create_view
+    #   def test_post_update_view
+    #   def test_post_delete_view
 
+    def test_get_absolute_url(self):
+        self.assertEqual(self.post.get_absolute_url(), "/post/1/") # as a post datamember has already been created above
+
+    def test_post_create_view(self):
+        """creating a new post using the ConfUrl post_new and checking if its view is funcitoning
+        properly """
+
+        response = self.client.post(
+            # get the url and then send it a new post object in dict form
+            reverse('post_new'), 
+            {
+                "title" : "test title",
+                "body" : "test body",
+                "author" : self.user
+            }
+        )
+        self.assertEqual(response.status_code, 200) 
+        self.assertContains(response, 'test title')
+        self.assertContains(response, 'test body')
+    
+    
+    def test_post_uodate_view(self):
+        response = self.client.post(
+            reverse("post_edit", args="1"),
+            {
+                "title" : "updated title",
+                "body" : "updated text"
+            }
+        )
+
+        self.assertContains(response, "updated title")
+        self.assertEqual(response.status_code, 302) # 302 is a redirect code as we redirect to detailed post view after updation
+
+    def test_post_delete_view(self):
+        response = self.client.post(
+            reverse("post_delete", args="1")
+        )
+        self.assertEqual(response.status_code, 302) # 302 is a redirect code as we redirect after deletion
+
+            
 
 
 

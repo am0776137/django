@@ -42,6 +42,11 @@ class BlogDeleteView(DeleteView):
     # reverse_lazy is used in place of reverse, so that this will not execute redirecting 
     # until the view has fisihed deleting the specified post object
     success_url = reverse_lazy('home')
+    # In update view, we are redirected to post_detail url which is a detailed post and it uses the 
+    # default : get_absolute_url defined in the Post Model to redirect to.
+    # But after deletion this redirection is not possible as there is no detailed view available
+    # for the deleted post. Hence it is redirected to home using success_url.
+
 
 
 
